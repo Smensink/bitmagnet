@@ -131,6 +131,10 @@ func (c configSourceProvider) source() (Source, error) {
 		fs["delete_xxx"] = true
 	}
 
+	if c.config.DeleteNonEnglish {
+		fs["delete_non_english"] = true
+	}
+
 	if !c.tmdbEnabled {
 		fs["tmdb_enabled"] = false
 	}
