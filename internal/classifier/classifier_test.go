@@ -195,6 +195,23 @@ func TestClassifier(t *testing.T) {
 				},
 			},
 		},
+		{
+			torrent: model.Torrent{
+				Name:        "Le Film (2000) FRENCH 720p.mkv",
+				FilesStatus: model.FilesStatusSingle,
+				Extension:   model.NewNullString("mkv"),
+				Size:        1000000000,
+			},
+			flags: Flags{
+				"delete_non_english":   true,
+				"local_search_enabled": false,
+				"apis_enabled":         false,
+			},
+			expectedErr: classification.RuntimeError{
+				Path:  []string{"workflows", "default", "[6]", "if_else", "if_action", "delete"},
+				Cause: classification.ErrDeleteTorrent,
+			},
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(fmt.Sprintf("torrent: %s", tc.torrent.Name), func(t *testing.T) {
