@@ -106,6 +106,7 @@ workflows:
           or:
             - "result.contentType in flags.delete_content_types"
             - "flags.delete_xxx && result.contentType == contentType.xxx"
+            - "flags.delete_non_english && result.languages.size() > 0 && !result.languages.exists(l, l == 'en')"
         if_action: delete
 extensions:
   audio:
@@ -271,9 +272,11 @@ flag_definitions:
   tmdb_enabled: bool
   delete_content_types: content_type_list
   delete_xxx: bool
+  delete_non_english: bool
 flags:
   local_search_enabled: true
   apis_enabled: true
   tmdb_enabled: true
   delete_content_types: []
   delete_xxx: false
+  delete_non_english: false
